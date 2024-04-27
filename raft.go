@@ -11,9 +11,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/hashicorp/go-hclog"
-
 	"github.com/armon/go-metrics"
+	"github.com/hashicorp/go-hclog"
 )
 
 const (
@@ -1592,7 +1591,7 @@ func (r *Raft) requestVote(rpc RPC, req *RequestVoteRequest) {
 		// Grant the vote
 		if len(r.configurations.latest.Servers) > 0 && !inConfiguration(r.configurations.latest, candidateID) {
 			r.logger.Warn("rejecting vote request since node is not in configuration",
-				"from", candidate)
+				"from", candidate, "configurations", r.configurations.latest, "candidateID", candidateID)
 			return
 		}
 	}
